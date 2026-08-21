@@ -8,7 +8,7 @@ export function StepLetter({
   onNext,
 }: {
   letter: string;
-  sender?: string;
+  sender?: string | undefined;
   onNext: () => void;
 }) {
   const [shown, setShown] = useState(0);

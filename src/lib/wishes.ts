@@ -3,7 +3,7 @@ import wishesFile from "@/data/wishes.json";
 export type Wish = {
   id: string;
   name: string;
-  sender?: string;
+  sender?: string | undefined;
   letter: string;
 };
 
