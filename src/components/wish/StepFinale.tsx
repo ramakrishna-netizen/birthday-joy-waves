@@ -4,7 +4,7 @@ import hbd from "@/assets/hbd-sticker.png";
 import { rain } from "@/lib/celebrate";
 import { StepScreen, FloatingHearts } from "./Shell";
 
-export function StepFinale({ name, sender }: { name: string; sender?: string }) {
+export function StepFinale({ name, sender }: { name: string; sender?: string | undefined }) {
   useEffect(() => {
     rain(4000);
   }, []);
