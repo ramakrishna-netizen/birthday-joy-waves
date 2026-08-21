@@ -13,7 +13,8 @@ default so it works with just the name). Button: "Create the surprise".
 **A2. Link ready**
 Card showing the generated link, a **Copy link** button, WhatsApp share button, a QR code,
 and a **Preview** button that opens the recipient experience in a new tab.
-No account needed — everything is encoded in the link itself, so no sign-in and nothing to set up.
+No account needed — each wish gets a short id (e.g. `/wish/x7k2p9`) and the message is stored
+in a wishes file instead of being stuffed into the link.
 
 ## Part B — Recipient experience (the link)
 
@@ -50,9 +51,14 @@ Illustrations (balloons, cake, bouquet, gift, bear & panda stickers) generated t
 reference style — the reference site's own images are copyrighted, so we'll create lookalikes.
 
 ## Technical notes
-- Recipient data (name, sender, message) is encoded into the URL, so no backend or database.
-  If you'd rather have short links and track opens, that needs Lovable Cloud — say the word.
-- One route for the creator, one for the experience (`/wish?d=...`), each step its own component.
+- **Where messages live:** a `src/data/wishes.json` file in the project holds the wishes
+  (`id`, name, sender, letter). Links are short and clean: `/wish/x7k2p9`.
+  Newly created wishes are also kept in the browser so the creator can preview instantly,
+  and I can add any wish permanently into `wishes.json` for you.
+- Trade-off: since it's a file and not a database, a wish created in the browser only follows
+  the link on other devices once it's saved into `wishes.json`. Flip on Lovable Cloud later and
+  every created link works everywhere automatically — same screens, no redesign.
+- One route for the creator, one for the experience (`/wish/$id`), each step its own component.
 - Music: a short looping tune, muted until the recipient taps (browser autoplay rules).
 
 ## Scope check
