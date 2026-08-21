@@ -26,8 +26,7 @@ with music toggle in the corner.
 "Are you excited for what's next?" with **Yes** and a playful **No** button that runs away
 from the cursor.
 
-**B3. Pop the balloons** — 4 floating balloons, counter "1/4 POPPED", confetti burst per pop,
-a sweet word appears each time ("You", "are", "so", "special").
+**B3. Pop the balloon** — one single balloon floating in the middle of the screen; tap it to pop. On pop, a confetti burst reveals the animated text "You are so special".
 
 **B4. Blow the candle** — dark room, cake with a lit flickering candle, "Close your eyes &
 make a wish". Tap (or blow into mic if allowed) puts the candle out; confetti + lights back on.
