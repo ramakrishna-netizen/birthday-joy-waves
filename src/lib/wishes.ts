@@ -1,4 +1,5 @@
 import wishesFile from "@/data/wishes.json";
+import { supabase } from "@/lib/supabase";
 
 export type Wish = {
   id: string;
@@ -6,8 +7,6 @@ export type Wish = {
   sender?: string | undefined;
   letter: string;
 };
-
-const STORAGE_KEY = "birthday-wishes";
 
 export const defaultLetter = (name: string) =>
   `Happy birthday, ${name}! I hope today is as warm and lovely as you are. ` +
@@ -17,26 +16,30 @@ export const defaultLetter = (name: string) =>
 /** Wishes saved in the project file — these work on every device. */
 const fileWishes = wishesFile as Record<string, Wish>;
 
-function readLocal(): Record<string, Wish> {
-  if (typeof window === "undefined") return {};
-  try {
-    return JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? "{}");
-  } catch {
-    return {};
-  }
+export async function getWish(id: string): Promise<Wish | null> {
+  if (!supabase) return fileWishes[id] ?? null;
+
+  const { data, error } = await supabase
+    .from("wishes")
+    .select("id, name, sender, letter")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
 }
 
-export function getWish(id: string): Wish | null {
-  return fileWishes[id] ?? readLocal()[id] ?? null;
-}
+export async function saveWish(wish: Wish): Promise<Wish> {
+  if (!supabase) return wish;
 
-export function saveWish(wish: Wish): Wish {
-  if (typeof window !== "undefined") {
-    const all = readLocal();
-    all[wish.id] = wish;
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-  }
-  return wish;
+  const { data, error } = await supabase
+    .from("wishes")
+    .insert(wish)
+    .select("id, name, sender, letter")
+    .single();
+
+  if (error) throw error;
+  return data;
 }
 
 export function newWishId(): string {

@@ -1,23 +1,56 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import music from "@/assets/audio/music.mp3";
 
-export function PhoneFrame({
-  children,
-  dark = false,
-}: {
-  children: ReactNode;
-  dark?: boolean;
-}) {
+export function PhoneFrame({ children, dark = false }: { children: ReactNode; dark?: boolean }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-blush/40 p-0 sm:p-6">
+    <div className="flex min-h-screen items-center justify-center bg-blush/40 p-3 sm:p-6">
       <div
-        className={`relative w-full max-w-[420px] overflow-hidden sm:rounded-[2.5rem] sm:border-8 sm:border-foreground/80 sm:shadow-2xl ${
+        className={`relative w-full max-w-[420px] overflow-hidden rounded-[2rem] border-4 border-foreground/80 shadow-2xl sm:rounded-[2.5rem] sm:border-8 ${
           dark ? "bg-night" : "bg-cream"
         } min-h-screen transition-colors duration-700 sm:min-h-[780px]`}
+        style={{ width: "min(100%, 420px)", maxHeight: "100vh" }}
       >
+        <AutoMusic />
         {children}
       </div>
     </div>
   );
+}
+
+function AutoMusic() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audio = new Audio(music);
+    audio.loop = true;
+    audio.volume = 0.45;
+    audioRef.current = audio;
+
+    const playAudio = () => {
+      void audio.play().catch(() => {
+        // Retry from the first user gesture when autoplay is blocked.
+      });
+    };
+
+    const startAfterGesture = () => {
+      playAudio();
+      window.removeEventListener("pointerdown", startAfterGesture);
+      window.removeEventListener("keydown", startAfterGesture);
+    };
+
+    playAudio();
+    window.addEventListener("pointerdown", startAfterGesture, { once: true });
+    window.addEventListener("keydown", startAfterGesture, { once: true });
+
+    return () => {
+      window.removeEventListener("pointerdown", startAfterGesture);
+      window.removeEventListener("keydown", startAfterGesture);
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, []);
+
+  return null;
 }
 
 export function StepScreen({
@@ -29,7 +62,7 @@ export function StepScreen({
 }) {
   return (
     <div
-      className={`flex min-h-screen flex-col items-center justify-center gap-6 px-7 py-12 text-center sm:min-h-[780px] ${className}`}
+      className={`animate-rise-in flex min-h-screen flex-col items-center justify-center gap-6 px-5 py-10 text-center sm:min-h-[780px] sm:px-7 sm:py-12 ${className}`}
     >
       {children}
     </div>

@@ -37,9 +37,26 @@ function WishPage() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    setWish(getWish(id));
-    setReady(true);
+    let active = true;
+    getWish(id)
+      .then((foundWish) => {
+        if (active) setWish(foundWish);
+      })
+      .catch(() => {
+        if (active) setWish(null);
+      })
+      .finally(() => {
+        if (active) setReady(true);
+      });
+
+    return () => {
+      active = false;
+    };
   }, [id]);
+
+  useEffect(() => {
+    setDark(step === 3);
+  }, [step]);
 
   const next = () => setStep((s) => s + 1);
 

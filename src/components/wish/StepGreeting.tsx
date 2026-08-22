@@ -1,5 +1,5 @@
 import { useState } from "react";
-import bearPanda from "@/assets/bear-panda-cake.png";
+import bearPanda from "@/assets/template-icons/bears-cake.webp";
 import { StepScreen, FloatingHearts, NextButton } from "./Shell";
 
 export function StepGreeting({ name, onNext }: { name: string; onNext: () => void }) {

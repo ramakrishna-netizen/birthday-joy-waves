@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Copy, Check, Eye, MessageCircle } from "lucide-react";
-import bearPanda from "@/assets/bear-panda-cake.png";
+import bearPanda from "@/assets/template-icons/bears-cake.webp";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -34,23 +34,33 @@ function CreatePage() {
   const [letter, setLetter] = useState("");
   const [wish, setWish] = useState<Wish | null>(null);
   const [copied, setCopied] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
   const link = wish
     ? `${typeof window !== "undefined" ? window.location.origin : ""}/wish/${wish.id}`
     : "";
 
-  const create = (e: React.FormEvent) => {
+  const create = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = name.trim();
     if (!trimmed) return;
-    setWish(
-      saveWish({
-        id: newWishId(),
-        name: trimmed,
-        sender: sender.trim() || undefined,
-        letter: letter.trim() || defaultLetter(trimmed),
-      }),
-    );
+    setSaving(true);
+    setError("");
+    try {
+      setWish(
+        await saveWish({
+          id: newWishId(),
+          name: trimmed,
+          sender: sender.trim() || undefined,
+          letter: letter.trim() || defaultLetter(trimmed),
+        }),
+      );
+    } catch {
+      setError("We couldn't save this surprise. Check your Supabase setup and try again.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const copy = async () => {
@@ -117,10 +127,12 @@ function CreatePage() {
             </div>
             <button
               type="submit"
+              disabled={saving}
               className="w-full rounded-full bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:scale-[1.02] active:scale-95"
             >
-              Create the surprise
+              {saving ? "Creating…" : "Create the surprise"}
             </button>
+            {error && <p className="text-sm font-medium text-destructive">{error}</p>}
           </form>
         ) : (
           <div className="w-full space-y-4 rounded-3xl bg-card p-6 shadow-xl">

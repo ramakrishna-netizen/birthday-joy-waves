@@ -1,45 +1,58 @@
 import { useState } from "react";
-import gift from "@/assets/gift.png";
+import gift from "@/assets/template-icons/gift.webp";
 import { celebrate } from "@/lib/celebrate";
 import { StepScreen, NextButton } from "./Shell";
 
 export function StepGift({ onNext }: { onNext: () => void }) {
   const [taps, setTaps] = useState(0);
+  const [wiggleKey, setWiggleKey] = useState(0);
   const opened = taps >= 3;
 
-  const tap = () => {
+  const tap = async () => {
     if (opened) return;
     const next = taps + 1;
     setTaps(next);
-    if (next >= 3) celebrate();
+    setWiggleKey((key) => key + 1);
+    if (next >= 3) {
+      await celebrate();
+    }
   };
 
   return (
-    <StepScreen>
-      <p className="font-display text-4xl text-rose">One last thing…</p>
+    <StepScreen className="relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-pink-100/30 via-transparent to-rose-100/40" />
+      <p className="relative z-10 font-display text-4xl text-rose">One last thing…</p>
       {!opened ? (
         <>
-          <button onClick={tap} aria-label="Open the gift" className="animate-wobble">
+          <button
+            key={wiggleKey}
+            onClick={tap}
+            aria-label="Open the gift"
+            className="relative z-10 animate-tap-wiggle"
+          >
+            <span className="absolute inset-0 -z-10 rounded-full bg-primary/10 blur-2xl" />
             <img
               src={gift}
               alt="Wrapped birthday gift box"
               width={1024}
               height={1024}
               loading="lazy"
-              className="w-56 drop-shadow-xl"
+              className="w-56 drop-shadow-xl transition-transform duration-200 hover:scale-105"
             />
           </button>
-          <p className="text-sm font-medium text-muted-foreground">
+          <p className="relative z-10 text-sm font-medium text-muted-foreground">
             Tap the gift to unwrap it — {3 - taps} more
           </p>
         </>
       ) : (
-        <div className="flex flex-col items-center gap-5">
+        <div className="relative z-10 flex flex-col items-center gap-5">
           <span className="animate-pop-in text-7xl">🎁</span>
           <p className="animate-rise-in font-display text-4xl text-primary">
             It's a whole year of happiness
           </p>
-          <NextButton onClick={onNext}>Next</NextButton>
+          <div className="animate-rise-in" style={{ animationDelay: "0.2s" }}>
+            <NextButton onClick={onNext}>Next</NextButton>
+          </div>
         </div>
       )}
     </StepScreen>
