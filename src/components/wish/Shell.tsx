@@ -22,29 +22,31 @@ function AutoMusic() {
 
   useEffect(() => {
     const audio = new Audio(music);
+    audio.preload = "auto";
     audio.loop = true;
     audio.volume = 0.45;
     audioRef.current = audio;
 
     const playAudio = () => {
-      void audio.play().catch(() => {
-        // Retry from the first user gesture when autoplay is blocked.
-      });
+      if (audio.paused) void audio.play().catch(() => undefined);
     };
 
     const startAfterGesture = () => {
       playAudio();
-      window.removeEventListener("pointerdown", startAfterGesture);
-      window.removeEventListener("keydown", startAfterGesture);
     };
 
+    audio.load();
     playAudio();
-    window.addEventListener("pointerdown", startAfterGesture, { once: true });
-    window.addEventListener("keydown", startAfterGesture, { once: true });
+    window.addEventListener("touchstart", startAfterGesture, { capture: true, passive: true });
+    window.addEventListener("pointerdown", startAfterGesture, { capture: true });
+    window.addEventListener("click", startAfterGesture, { capture: true });
+    window.addEventListener("keydown", startAfterGesture, { capture: true });
 
     return () => {
-      window.removeEventListener("pointerdown", startAfterGesture);
-      window.removeEventListener("keydown", startAfterGesture);
+      window.removeEventListener("touchstart", startAfterGesture, true);
+      window.removeEventListener("pointerdown", startAfterGesture, true);
+      window.removeEventListener("click", startAfterGesture, true);
+      window.removeEventListener("keydown", startAfterGesture, true);
       audio.pause();
       audio.currentTime = 0;
     };
