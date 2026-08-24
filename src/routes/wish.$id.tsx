@@ -3,10 +3,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PhoneFrame, StepScreen } from "@/components/wish/Shell";
 import { StepEnvelope } from "@/components/wish/StepEnvelope";
 import { StepGreeting } from "@/components/wish/StepGreeting";
-import { StepBalloon } from "@/components/wish/StepBalloon";
 import { StepCandle } from "@/components/wish/StepCandle";
-import { StepBouquet } from "@/components/wish/StepBouquet";
 import { StepLetter } from "@/components/wish/StepLetter";
+import { StepCompliments } from "@/components/wish/StepCompliments";
+import { StepPlans } from "@/components/wish/StepPlans";
 import { StepGift } from "@/components/wish/StepGift";
 import { StepFinale } from "@/components/wish/StepFinale";
 import { getWish, type Wish } from "@/lib/wishes";
@@ -55,7 +55,7 @@ function WishPage() {
   }, [id]);
 
   useEffect(() => {
-    setDark(step === 3);
+    setDark(step === 2);
   }, [step]);
 
   const next = () => setStep((s) => s + 1);
@@ -93,10 +93,10 @@ function WishPage() {
   const steps = [
     <StepEnvelope key="envelope" name={wish.name} onNext={next} />,
     <StepGreeting key="greeting" name={wish.name} onNext={next} />,
-    <StepBalloon key="balloon" onNext={next} />,
     <StepCandle key="candle" onNext={next} onDark={setDark} />,
-    <StepBouquet key="bouquet" name={wish.name} onNext={next} />,
     <StepLetter key="letter" letter={wish.letter} sender={wish.sender} onNext={next} />,
+    <StepCompliments key="compliments" onNext={next} />,
+    <StepPlans key="plans" onNext={next} />,
     <StepGift key="gift" onNext={next} />,
     <StepFinale key="finale" name={wish.name} sender={wish.sender} />,
   ];
