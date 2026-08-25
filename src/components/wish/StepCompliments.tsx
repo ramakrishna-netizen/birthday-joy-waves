@@ -3,11 +3,11 @@ import { StepScreen, NextButton } from "./Shell";
 
 const compliments = [
   "There are a few things about you that I genuinely love. ❤️",
-  "First... your smile. 🥹\nEspecially that little overlap of your teeth - I don't know why, but it makes your smile even cuter. Please don't ever feel insecure about it. ❤️",
+  "First... your smile. 🫠\nEspecially that little overlap of your teeth - I don't know why, but it makes your smile even cuter. Please don't ever feel insecure about it. ❤️",
   "And your dance... 💃✨\nI really loved it.",
   "You have this confidence and energy when you dance that is honestly so beautiful to watch.",
   "You were the one who sent me that video, and I still remember it. 😭❤️\nI actually watch it once in a while because your energy in that video always makes me smile.",
-  "And honestly... I really want to see you dance in real someday. 🥹💃❤️\nI feel like seeing that energy in person would be even more special.",
+  "And honestly... I really want to see you dance in real someday. 🫠💃❤️\nI feel like seeing that energy in person would be even more special.",
   "You have this really special energy about you... and I hope you never lose it. ✨",
 ];
 

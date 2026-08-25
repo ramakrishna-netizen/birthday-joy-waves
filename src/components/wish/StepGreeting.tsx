@@ -27,6 +27,9 @@ export function StepGreeting({ name, onNext }: { name: string; onNext: () => voi
         height={1024}
         className="animate-float-soft w-56 drop-shadow-xl"
       />
+       <p className="text-lg font-medium text-secondary-foreground">
+        Yes,I remembered, {name}
+      </p>
       <p className="text-lg font-medium text-secondary-foreground">
         Are you excited for what's next?
       </p>

@@ -93,7 +93,7 @@ function WishPage() {
   const steps = [
     <StepEnvelope key="envelope" name={wish.name} onNext={next} />,
     <StepGreeting key="greeting" name={wish.name} onNext={next} />,
-    <StepCandle key="candle" onNext={next} onDark={setDark} />,
+    <StepCandle key="candle" name={wish.name} onNext={next} onDark={setDark} />,
     <StepLetter key="letter" letter={wish.letter} sender={wish.sender} onNext={next} />,
     <StepCompliments key="compliments" onNext={next} />,
     <StepPlans key="plans" onNext={next} />,

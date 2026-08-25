@@ -2,7 +2,7 @@ import { useState } from "react";
 import heartTree from "@/assets/template-icons/heart-tree-2.webp";
 import { StepScreen, NextButton } from "./Shell";
 
-const plans = ["Dinner date", "Movie night", "Coffee & walk", "Picnic", "Mini golf", "Surprise me"];
+const plans = ["Chicken Biryani date 🍗", "Movie night 🎬", "Coffee & walk ☕", " You decide"];
 
 export function StepPlans({ onNext }: { onNext: () => void }) {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export function StepPlans({ onNext }: { onNext: () => void }) {
           />
         </div>
         <h1 className="reference-pixel-title text-center text-3xl uppercase leading-tight text-[#fff8fc] sm:text-4xl">
-          What would you like to do?
+          What would you like to do when we meet?
         </h1>
         <div className="mt-7 grid w-full grid-cols-2 gap-3">
           {plans.map((plan) => {

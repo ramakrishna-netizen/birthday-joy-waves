@@ -25,7 +25,9 @@ export function StepFinale({ name, sender }: { name: string; sender?: string | u
         Once again, Happy Birthday {name}!
       </h2>
       {sender && (
-        <p className="relative z-10 text-base font-medium text-muted-foreground">— from {sender}</p>
+          <><p className="text-lg font-medium text-secondary-foreground">
+          I just wanted to make you feel a little special today...🫠
+        </p><p className="relative z-10 text-base font-medium text-muted-foreground">— from {sender}</p></>
       )}
     </StepScreen>
   );

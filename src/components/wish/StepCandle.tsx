@@ -3,7 +3,15 @@ import candleCake from "@/assets/candle-cake.png";
 import { celebrate } from "@/lib/celebrate";
 import { StepScreen, NextButton } from "./Shell";
 
-export function StepCandle({ onNext, onDark }: { onNext: () => void; onDark: (v: boolean) => void }) {
+export function StepCandle({
+  name,
+  onNext,
+  onDark,
+}: {
+  name: string;
+  onNext: () => void;
+  onDark: (v: boolean) => void;
+}) {
   const [blown, setBlown] = useState(false);
 
   useEffect(() => {
@@ -26,7 +34,7 @@ export function StepCandle({ onNext, onDark }: { onNext: () => void; onDark: (v:
       <p
         className={`relative z-10 text-lg font-medium ${blown ? "text-secondary-foreground" : "text-cream/80"}`}
       >
-        {blown ? "Your wish is on its way ✨" : "Close your eyes & make a wish"}
+        {blown ? "Your wish is on its way ✨" : `Blow the candle , ${name}`}
       </p>
 
       <button onClick={blow} aria-label="Blow out the candle" className="relative z-10">

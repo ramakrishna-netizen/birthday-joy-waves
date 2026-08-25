@@ -1,5 +1,6 @@
 import { useState } from "react";
 import gift from "@/assets/template-icons/gift.webp";
+import scarfImage from "@/assets/template-icons/scarf-image.webp";
 import { celebrate } from "@/lib/celebrate";
 import { StepScreen, NextButton } from "./Shell";
 
@@ -21,7 +22,7 @@ export function StepGift({ onNext }: { onNext: () => void }) {
   return (
     <StepScreen className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-pink-100/30 via-transparent to-rose-100/40" />
-      <p className="relative z-10 font-display text-4xl text-rose">One last thing…</p>
+      <p className="relative z-10 font-display text-4xl text-rose">Surprise</p>
       {!opened ? (
         <>
           <button
@@ -46,9 +47,17 @@ export function StepGift({ onNext }: { onNext: () => void }) {
         </>
       ) : (
         <div className="relative z-10 flex flex-col items-center gap-5">
-          <span className="animate-pop-in text-7xl">🎁</span>
+          <span className="animate-pop-in text-7xl">
+            <img
+              src={scarfImage}
+              alt="A scarf gift reveal"
+              width={512}
+              height={512}
+              className="w-56 drop-shadow-xl"
+            />
+          </span>
           <p className="animate-rise-in font-display text-4xl text-primary">
-            It's a whole year of happiness
+            I'll Gift You when we meet...👀🤍
           </p>
           <div className="animate-rise-in" style={{ animationDelay: "0.2s" }}>
             <NextButton onClick={onNext}>Next</NextButton>
